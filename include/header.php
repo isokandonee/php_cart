@@ -40,59 +40,28 @@
             <div class="container col-sm-11">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a style="font-size:1.1em;"class="nav-link text-success <?php if ($CURRENT_PAGE == "Index") {?>active<?php }?>" href="
-                        <?php if (isset($_SESSION['email'])) { ?>
-                            ../dashboard/index.php
-                        <?php }
-                            else{?>
-                                #
-                        <?php    }
-                        ?>
-                        ">
-                            <?php 
-                                if (isset($_SESSION['email'])) {
-                                    echo  $_SESSION['first_name']." ".$_SESSION['last_name'];
-                                }
-                                else{
-                                    echo "<b style='font-size:25px;'>Welcome to Fixas-Bank</b>";
-                                }
-                            ?>
+                        <a style="font-size:1.1em;"class="nav-link text-success" href="#">
+                            Welcome to the Store
                         </a>
                     </li>
-                        <?php 
-                            if (isset($_SESSION['email'])) {
-                                echo '
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../dashboard/account.php">Create Account</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../dashboard/deposit.php">Deposit</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../dashboard/withdraw.php">Withdraw</a>
-                                </li>
-                                ';
-                            }
-                        ?>
-                        
-                </ul>
                 <?php 
-                    if (isset($_SESSION['email'])) {
+                    if (!empty($_SESSION['cart'])) {
                         echo '
-                        <form class="form-inline nav-right" action="../controller/logout.php" method="POST">
-                            <button class="btn btn-primary" type="submit">Logout</button>
-                        </form>';
+                        <a class="nav-item ml-5" href="cat.php">
+                            <button class="btn btn-primary" type="submit">Go to Cart</button>
+                        </a>';
                     }
                     else {
                         echo '
-                        <form class="form-inline nav-right" action="controller/login.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="token" value="sdkajsdaksjdklasjdaklsdjalkjs938092qpwoalsdalsdasdasd">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Email" name="email">
-                            <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password">
-                            <button class="btn btn-primary" type="submit">Login</button>
-                        </form>';
+                        <li class="nav-item ml-5">
+                            <a class="nav-link" href="#">Cart is Empty</a>
+                        </li>
+                        
+                        ';
                     }
                 ?>
+                        
+                </ul>
             </div>
         </nav>
     </header>

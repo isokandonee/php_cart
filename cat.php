@@ -1,10 +1,14 @@
+<?php
 
-<?php 
     // Start the session
     session_start();
 
     // Include the header file
     require "include/header.php";
+
+?>
+
+<?php
 
     // Check if the form has been submitted
     if (isset($_POST['add_to_cart'])) {
@@ -55,38 +59,7 @@
 <div class="container">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-6">
-                <h2 class="text-center">Shopping Cart</h2>
-                <div class="col-md-12">
-                    <div class="row">
-                        <?php 
-                            require "controller/connect.php";
-
-                            $query = "SELECT * FROM cart";
-                            $result = mysqli_query($conn, $query);
-
-                            while ($row = mysqli_fetch_array($result)) { ?>
-                                <div class="col-md-4">
-                                    <form method="post" action="cart.php?id=<?=$row['id']; ?>">
-                                        <img src="img/<?=$row['image']; ?>" alt="" style="height:15rem; width: 100%;">
-                                        <h5 class="text-center"><?=$row['name']; ?></h5>
-                                        <h5 class="text-center">$<?= number_format($row['price'], 2); ?></h5>
-                                        <input type="hidden" name="id" value="<?=$row['id'];?>">
-                                        <input type="hidden" name="name" value="<?=$row['name'];?>">
-                                        <input type="hidden" name="price" value="<?=$row['price'];?>">
-                                        <input type="number" class="form-control" name="quantity" value="1">
-                                        <input class="btn btn-warning btn-block" type="submit" name="add_to_cart" value="Add To Cart"><br>
-                                    </form>
-                                </div>
-                            <?php }
-                        
-                        ?>
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h2 class="text-center">Selected Items</h2>
                 <?php 
                     // var_dump($_SESSION['cart']);
@@ -117,7 +90,7 @@
                                     <td>".$value['quantity']."</td>
                                     <td>$".number_format($value['price'] * $value['quantity'], 2)."</td>
                                     <td>
-                                        <a href='cart.php?action=remove&id=".$value['id']."'>
+                                        <a href='cat.php?action=remove&id=".$value['id']."'>
                                             <button class='btn btn-danger btn-block'>Remove</button>
                                         </a?
                                     </td>
@@ -130,7 +103,7 @@
                             <td class='text-center' colspan='4'>Overall Price</td>
                             <td>$".number_format($total, 2)."</td>
                             <td>
-                                <a href='cart.php?action=clearall '>
+                                <a href='cat.php?action=clearall '>
                                     <button class='btn btn-warning btn-block'>Clear All</button>
                                 </a?
                             </td>
@@ -164,13 +137,16 @@
                 }
             }
         }
+    }else{        
+            // Redirect the user to the dashboard page with a success message
+            header("Location: index.php?cart_empty");
+            exit();
     }
 ?>
 
 <script>
     $(document).ready(function() {
         $("form").submit(function(e) {
-            location.reload();
             // return false;
             // e.preventDefault();
             // var id = $("#id").val();
@@ -182,7 +158,9 @@
     })
 </script>
 
-
 <?php
-    require "include/footer.php";
+
+// Include the footer file
+require "include/footer.php";
+
 ?>
